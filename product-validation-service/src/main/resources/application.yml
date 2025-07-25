@@ -1,0 +1,40 @@
+micronaut:
+  server:
+    port: 8085
+
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/product-db
+    username: postgres
+    password: 2503
+    driver-class-name: org.postgresql.Driver
+    dialect: io.micronaut.data.jdbc.postgres.PostgresDialect
+    maximumPoolSize: 40
+    minimumIdle: 10
+    connectionTimeout: 30000
+    idleTimeout: 10000
+    autoCommit: true
+
+jpa:
+  default:
+    properties:
+      hibernate.show_sql: true
+      hibernate.format_sql: true
+      hibernate.hbm2ddl.auto: update
+    entity-scan:
+      packages: com.productvalidationservice.core.models
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  topic:
+    orchestrator: orchestrator
+    product-validation-success: product-validation-success
+    product-validation-fail: product-validation-fail
+  consumer:
+    group-id: product-validation-group
+    auto-offset-reset: latest
+
+logger:
+  levels:
+    org.apache.kafka: OFF

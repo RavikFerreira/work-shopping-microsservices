@@ -1,0 +1,198 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    networks:
+      - orchestrator-services
+    ports:
+      - "27017:27017"
+
+  payment-db:
+    image: postgres:16
+    container_name: payment-db
+    networks:
+      - orchestrator-services
+    environment:
+      POSTGRES_DB: payment-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2503
+    ports:
+      - "5432:5432"
+
+  shopping-db:
+    image: postgres:16
+    container_name: shopping-db
+    networks:
+      - orchestrator-services
+    environment:
+      POSTGRES_DB: shopping-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2503
+    ports:
+      - "5433:5432"
+
+  inventory-db:
+    image: postgres:16
+    container_name: inventory-db
+    networks:
+      - orchestrator-services
+    environment:
+      POSTGRES_DB: inventory-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2503
+    ports:
+      - "5434:5432"
+
+  product-db:
+    image: postgres:16
+    container_name: product-db
+    networks:
+      - orchestrator-services
+    environment:
+      POSTGRES_DB: product-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2503
+    ports:
+      - "5435:5432"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - orchestrator-services
+    ports:
+      - "9090:9090"
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - orchestrator-services
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - orchestrator-services
+    hostname: redis
+    restart: unless-stopped
+
+  redpanda-console:
+    container_name: redpanda-console
+    image: docker.io/redpandadata/console:latest
+    restart: on-failure
+    entrypoint: /bin/sh
+    command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
+    ports:
+      - "8000:8080"
+    networks:
+      - orchestrator-services
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["kafka:29092"]
+    depends_on:
+      - "kafka"
+
+  kafka:
+    container_name: kafka
+    image: obsidiandynamics/kafka
+    restart: "no"
+    ports:
+      - "9092:9092"
+    networks:
+      - orchestrator-services
+    environment:
+      KAFKA_LISTENERS: "INTERNAL://:29092,EXTERNAL://:9092"
+      KAFKA_ADVERTISED_LISTENERS: "INTERNAL://kafka:29092,EXTERNAL://localhost:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "INTERNAL"
+      KAFKA_RESTART_ATTEMPTS: "10"
+      KAFKA_RESTART_DELAY: "5"
+    volumes:
+      - ./data/kafka/data:/var/lib/kafka/data
+
+  payment-services:
+    build: './payment-services'
+    container_name: payment-services
+    depends_on:
+      - payment-db
+      - kafka
+    networks:
+      - orchestrator-services
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      DATASOURCES_DEFAULT_URL: jdbc:postgresql://payment-db:5432/payment-db
+      DATASOURCES_DEFAULT_USERNAME: postgres
+      DATASOURCES_DEFAULT_PASSWORD: 2503
+    ports:
+      - "8082:8082"
+
+  inventory-service:
+    build: './inventory-service'
+    container_name: inventory-services
+    depends_on:
+      - inventory-db
+      - kafka
+    networks:
+      - orchestrator-services
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      DATASOURCES_DEFAULT_URL: jdbc:postgresql://inventory-db:5432/inventory-db
+      DATASOURCES_DEFAULT_USERNAME: postgres
+      DATASOURCES_DEFAULT_PASSWORD: 2503
+    ports:
+      - "8086:8086"
+
+  product-validation-service:
+    build: './product-validation-service'
+    container_name: product-validation-service
+    depends_on:
+      - shopping-db
+      - kafka
+    networks:
+      - orchestrator-services
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      DATASOURCES_DEFAULT_URL: jdbc:postgresql://product-db:5432/product-db
+      DATASOURCES_DEFAULT_USERNAME: postgres
+      DATASOURCES_DEFAULT_PASSWORD: 2503
+    ports:
+      - "8085:8085"
+
+  shopping-services:
+    build: './shopping-services'
+    container_name: shopping-services
+    depends_on:
+      - mongodb
+      - kafka
+    networks:
+      - orchestrator-services
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - MONGODB_URI=mongodb://mongodb:27017/shopping-db
+    ports:
+      - "8083:8083"
+
+  orchestrator-services:
+    build: './orchestrator-services'
+    container_name: orchestrator-services
+    depends_on:
+      - kafka
+    networks:
+      - orchestrator-services
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    ports:
+      - "4000:4000"
+
+networks:
+  orchestrator-services:
+    driver: bridge

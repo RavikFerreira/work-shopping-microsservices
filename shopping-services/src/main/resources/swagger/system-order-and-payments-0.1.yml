@@ -1,0 +1,397 @@
+openapi: 3.0.1
+info:
+  title: System Order and Payments
+  description: This is Documentation API
+  version: "0.1"
+paths:
+  /event/filters/{shoppingId}:
+    get:
+      operationId: findByFilters
+      parameters:
+      - name: shoppingId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+  /event/list:
+    get:
+      operationId: findAll
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Event"
+  /product/addProduct:
+    post:
+      operationId: addProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+  /product/delete/{idProduct}:
+    delete:
+      operationId: delete
+      parameters:
+      - name: idProduct
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+
+  /product/list:
+    get:
+      operationId: listProducts
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProductResponse"
+  /product/searchProduct/{idProduct}:
+    get:
+      operationId: search
+      parameters:
+      - name: idProduct
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+  /product/updateOrderInProduct/{idProduct}:
+    patch:
+      operationId: updateOrderInProduct
+      parameters:
+      - name: idProduct
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+  /shopping/addProductInOrder/{shoppingId}/{idProduct}:
+    patch:
+      operationId: addProductInOrder
+      parameters:
+      - name: shoppingId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: idProduct
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingOrderProductsResponse"
+  /shopping/create:
+    post:
+      operationId: addShoppingCart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Shopping"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingResponse"
+  /shopping/delete/{shoppingId}:
+    delete:
+      operationId: delete_1
+      parameters:
+      - name: shoppingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+
+  /shopping/finallyOrder/{shoppingId}:
+    get:
+      operationId: finalizedOrder
+      parameters:
+      - name: shoppingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingResponse"
+  /shopping/list:
+    get:
+      operationId: listOrders
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShoppingOrderProductsResponse"
+  /shopping/orders/{shoppingId}:
+    patch:
+      operationId: addOrder
+      parameters:
+      - name: shoppingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingOrderResponse"
+  /shopping/payment/{shoppingId}:
+    get:
+      operationId: realizedPayment
+      parameters:
+      - name: shoppingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /shopping/search/{shoppingId}:
+    get:
+      operationId: search_1
+      parameters:
+      - name: shoppingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingOrderProductsResponse"
+components:
+  schemas:
+    Event:
+      required:
+      - createdAt
+      - eventHistory
+      - id
+      - source
+      - status
+      - shoppingId
+      - transactionId
+      type: object
+      properties:
+        id:
+          type: string
+        transactionId:
+          type: string
+        shoppingId:
+          type: string
+        source:
+          type: string
+        status:
+          type: string
+        eventHistory:
+          type: array
+          items:
+            $ref: "#/components/schemas/History"
+        createdAt:
+          type: string
+          format: date-time
+    History:
+      required:
+      - createdAt
+      - message
+      - source
+      - status
+      type: object
+      properties:
+        source:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Order:
+      required:
+      - idOrder
+      - products
+      type: object
+      properties:
+        idOrder:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+    Product:
+      required:
+      - idProduct
+      - name
+      - price
+      - quantity
+      type: object
+      properties:
+        idProduct:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+          format: double
+        quantity:
+          type: integer
+          format: int32
+    ProductResponse:
+      required:
+        - id
+        - idProduct
+        - name
+        - price
+        - quantity
+      type: object
+      properties:
+        id:
+          type: number
+        idProduct:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+          format: double
+        quantity:
+          type: integer
+          format: int32
+
+    Shopping:
+      required:
+      - shoppingId
+      type: object
+      properties:
+        shoppingId:
+          type: string
+
+  ShoppingResponse:
+      required:
+        - account
+        - id
+        - shoppingId
+        - state
+      type: object
+      properties:
+        id:
+          type: string
+        shoppingId:
+          type: string
+        account:
+          type: number
+          format: double
+
+  ShoppingOrderResponse:
+      required:
+        - account
+        - id
+        - shoppingId
+        - state
+        - order
+      type: object
+      properties:
+        id:
+          type: string
+        shoppingId:
+          type: string
+        order:
+          type: array
+          example: []
+        account:
+          type: number
+          format: double
+
+  ShoppingOrderProductsResponse:
+      required:
+        - account
+        - id
+        - shoppingId
+        - state
+        - order
+      type: object
+      properties:
+        id:
+          type: string
+        shoppingId:
+          type: string
+        order:
+          $ref: "#/components/schemas/Order"
+        account:
+          type: number
+          format: double
+

@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "d4acf6ab-09d6-4300-8be1-711ad4b9fbfe",
+		"name": "Order and Payments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29028638"
+	},
+	"item": [
+		{
+			"name": "ShoppingController",
+			"item": [
+				{
+					"name": "/shopping/list",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "/shopping/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"shoppingId\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/create"
+					},
+					"response": []
+				},
+				{
+					"name": "/shopping/search/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8083/shopping/search/1"
+					},
+					"response": []
+				},
+				{
+					"name": "/shopping/delete/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8083/shopping/delete/1"
+					},
+					"response": []
+				},
+				{
+					"name": "/shopping/finallyOrder/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8083/shopping/finallyOrder/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderController",
+			"item": [
+				{
+					"name": "/shopping/orders/",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": "localhost:8083/shopping/orders/1"
+					},
+					"response": []
+				},
+				{
+					"name": "/shopping/list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8083/shopping/list"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PaymentsController",
+			"item": [
+				{
+					"name": "/shopping/payment/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8083/shoppingF/payment/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ProductsController",
+			"item": [
+				{
+					"name": "/product/addProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProduct\": \"2\",\r\n  \"name\": \"PRODUTO\",\r\n  \"price\": 6,\r\n  \"quantity\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8083/product/addProduct"
+					},
+					"response": []
+				},
+				{
+					"name": "/product/list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8083/product/list"
+					},
+					"response": []
+				},
+				{
+					"name": "/product/searchProduct/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8083/product/searchProduct/1"
+					},
+					"response": []
+				},
+				{
+					"name": "/product/updateOrderInProduct/",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": "localhost:8080/editarPedidoCardapio/{id}"
+					},
+					"response": []
+				},
+				{
+					"name": "/product/delete/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8083/delete/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EventController",
+			"item": [
+				{
+					"name": "/event/list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8083/event/list"
+					},
+					"response": []
+				},
+				{
+					"name": "/event/filters/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8083/event/filters/"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

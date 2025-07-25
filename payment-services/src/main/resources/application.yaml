@@ -1,0 +1,50 @@
+micronaut:
+  server:
+    port: 8082
+
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/payment-db
+    username: postgres
+    password: 2503
+    driver-class-name: org.postgresql.Driver
+    dialect: io.micronaut.data.jdbc.postgres.PostgresDialect
+    maximumPoolSize: 40
+    minimumIdle: 10
+    connectionTimeout: 30000
+    idleTimeout: 10000
+    autoCommit: true
+
+jpa:
+  default:
+    properties:
+      hibernate.show_sql: true
+      hibernate.format_sql: true
+      hibernate.hbm2ddl.auto: update
+    entity-scan:
+      packages: com.payment.core.models
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  topic:
+    orchestrator: orchestrator
+    payment-success: payment-success
+    payment-fail: payment-fail
+  consumer:
+    group-id: payment-group
+    auto-offset-reset: latest
+
+redis:
+  uri: redis://localhost:6379
+  ssl: true
+  timeout: 30s
+  io-thread-pool-size: 5
+  computation-thread-pool-size: 4
+  caches:
+    products:
+      expire-after-write: 60s
+
+logger:
+  levels:
+    org.apache.kafka: OFF

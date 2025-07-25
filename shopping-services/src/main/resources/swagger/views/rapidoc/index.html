@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- Important: must specify, else rendering will be effected -->
+<html lang="en">
+    <head>
+        <title>system-order-and-payments-0.1</title>
+        <!-- Important: The Custom element uses utf8 characters -->
+        <meta charset='utf-8' />
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+    </head>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const docEl = document.getElementById('rapidoc');
+            docEl.addEventListener('before-try', (e) => {
+                e.detail.request.headers.append('AAA-BBB', 'CCC DDDD');
+            });
+        });
+    </script>
+    <body>
+        <rapi-doc id='rapidoc' layout="row" sort-tags="true" sort-endpoints-by="method" show-header="false" theme="dark"></rapi-doc>
+        <script>
+            const extract = function(v) {
+                return decodeURIComponent(v.replace(/(?:^|.*;\s*)contextPath\s*=\s*([^;]*).*$|^.*$/, "$1"));
+            }
+            const cookie = extract(document.cookie)
+            const contextPath = cookie === '' ? extract(window.location.search.substring(1)) : cookie
+            const head = document.getElementsByTagName('head')[0];
+            
+            const rapidocJs = script(contextPath + "/rapidoc/res/rapidoc-min.js", head, true)
+
+            rapidocJs.onload = function () {
+
+                const rapidoc = document.getElementById('rapidoc')
+                if (contextPath !== '') {
+                    rapidoc.addEventListener('spec-loaded', e => {
+                        e.detail.tags.forEach(tag => tag.paths.forEach(path => path.path = contextPath + path.path));
+                        rapidoc.requestUpdate();
+                    });
+                }
+                rapidoc.setAttribute('spec-url', contextPath + '/swagger/system-order-and-payments-0.1.yml');
+                
+            }
+
+            function script(src, head, type, defer) {
+                const el = document.createElement('script');
+                el.src = src;
+                if (defer !== undefined && defer) {
+                    el.setAttribute("defer", "");
+                }
+                head.appendChild(el);
+                return el;
+            }
+        </script>
+    </body>
+</html>

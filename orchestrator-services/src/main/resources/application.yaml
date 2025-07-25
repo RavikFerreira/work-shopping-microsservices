@@ -1,0 +1,21 @@
+micronaut:
+  server:
+    port: 4000
+
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  topic:
+    start: start
+    finish-success: finish-success
+    finish-fail: finish-fail
+    orchestrator: orchestrator
+
+  consumer:
+    group-id: orchestrator-group
+    auto-offset-reset: latest
+
+logger:
+  levels:
+    org.apache.kafka: OFF

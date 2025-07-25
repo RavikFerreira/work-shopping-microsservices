@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.productvalidationservice
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [app-name, data, data-jpa, http-client-test, java, java-application, jdbc-hikari, junit, kafka, logback, maven, maven-enforcer-plugin, micronaut-aot, micronaut-http-validation, netty-server, postgres, readme, serialization-jackson, shade, static-resources, test-resources, yaml, yaml-build]
