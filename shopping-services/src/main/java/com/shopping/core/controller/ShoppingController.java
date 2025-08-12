@@ -34,11 +34,11 @@ public class ShoppingController {
         return HttpResponse.created(addShoppingCart);
     }
 
-    @Patch("orders/{idShopping}")
-    public HttpResponse<Shopping> addOrder(@PathVariable String idShopping){
-        Shopping addOrder = shoppingService.addOrder(idShopping);
-        return HttpResponse.ok(addOrder);
-    }
+//    @Patch("orders/{idShopping}")
+//    public HttpResponse<Shopping> addOrder(@PathVariable String idShopping){
+//        Shopping addOrder = shoppingService.addOrder(idShopping);
+//        return HttpResponse.ok(addOrder);
+//    }
     @Patch("addProductInOrder/{idShopping}/{idProduct}")
     public HttpResponse<Shopping> addProductInOrder(@PathVariable String idShopping, @PathVariable String idProduct) throws ProductResourceNotFoundException {
         Shopping product = shoppingService.addProductInOrder(idShopping, idProduct);

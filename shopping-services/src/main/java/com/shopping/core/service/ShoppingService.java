@@ -60,21 +60,15 @@ public class ShoppingService {
             throw new CannotCreateAShoppingWithTheSameId("Cannot create a shopping with the same id: " + shopping.getIdShopping());
         }
         shopping.setOrder(shopping.getOrder());
-
+        if(shopping.getOrder() == null) {
+            Order order = new Order();
+            shopping.setOrder(order);
+            order.setIdOrder(shopping.getIdShopping());
+        }
         shoppingRepository.save(shopping);
-
         return shopping;
     }
-    public Shopping addOrder(String idProduct){
-        Shopping shoppingList = shoppingRepository.findByIdShopping(idProduct).orElseThrow(() -> new CannotCreateAShoppingWithTheSameId("Cannot create a shopping with the same id: " + idProduct));
-        if(shoppingList.getOrder() == null){
-            Order order = new Order();
-            shoppingList.setOrder(order);
-            order.setIdOrder(shoppingList.getIdShopping());
-            shoppingRepository.update(shoppingList);
-        }
-        return shoppingList;
-    }
+
     public Shopping addProductInOrder(String idShopping, String idProduct) {
         Shopping shoppingList = shoppingRepository.findByIdShopping(idShopping).orElseThrow(() -> new ShoppingResourceNotFoundException("Shopping resource not found!"));
         Product productExists = productRepository.findByIdProduct(idProduct).orElseThrow(() -> new ProductResourceNotFoundException("Product resource not found!"));
@@ -143,13 +137,12 @@ public class ShoppingService {
         }
         return shoppingList;
     }
-    public Shopping realizedPayment(String idShopping){
+    public void realizedPayment(String idShopping){
         Shopping shoppingList = shoppingRepository.findByIdShopping(idShopping).orElseThrow(() -> new ShoppingResourceNotFoundException("Shopping resource not found! "));
         producer.sendEvent(jsonUtil.toJson(createPayload(shoppingList)));
-        return shoppingList;
     }
 
-    public Shopping finalizedOrder(String shoppingId){
+    public void finalizedOrder(String shoppingId){
         Event event = eventRepository.findTop1ByShoppingIdOrderByCreatedAtDesc(shoppingId).orElseThrow(() -> new ShoppingResourceNotFoundException("Shopping resource not found!"));
         Shopping shoppingList = shoppingRepository.findByIdShopping(event.getShoppingId()).orElseThrow(() -> new ShoppingResourceNotFoundException("Shopping resource not found! "));
         if(event.getSource() == null  && event.getStatus() ==  null){
@@ -162,6 +155,5 @@ public class ShoppingService {
             shoppingList.setOrder(null);
             shoppingRepository.update(shoppingList);
         }
-        return shoppingList;
     }
 }
