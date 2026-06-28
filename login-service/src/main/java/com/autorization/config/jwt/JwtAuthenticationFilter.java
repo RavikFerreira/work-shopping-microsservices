@@ -1,4 +1,4 @@
-package com.autorization.config;
+package com.autorization.config.jwt;
 
 
 import com.autorization.service.JwtService;

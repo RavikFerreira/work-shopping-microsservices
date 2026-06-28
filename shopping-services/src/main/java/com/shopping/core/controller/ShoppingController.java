@@ -1,5 +1,6 @@
 package com.shopping.core.controller;
 
+import com.shopping.core.dto.UserEvent;
 import com.shopping.config.exceptions.CannotCreateAShoppingWithTheSameId;
 import com.shopping.config.exceptions.CannotDeleteABusyShopping;
 import com.shopping.config.exceptions.ProductResourceNotFoundException;
@@ -15,6 +16,7 @@ import io.micronaut.http.annotation.Patch;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.security.annotation.Secured;
+import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 
 import java.util.List;
@@ -25,17 +27,16 @@ public class ShoppingController {
     private ShoppingService shoppingService;
 
     @Get("list")
-    @Secured({"ADMIN", "USER"})
+    @Secured({"ADMIN"})
     public HttpResponse<List<Shopping>> listOrders(){
         return HttpResponse.ok(shoppingService.list());
     }
 
-    @Post("create")
-    @Secured({"ADMIN", "USER"})
-    public HttpResponse<Shopping> addShoppingCart(@Body Shopping shopping) throws ShoppingResourceNotFoundException, CannotCreateAShoppingWithTheSameId {
-        Shopping addShoppingCart = shoppingService.addShoppingCart(shopping);
-        return HttpResponse.created(addShoppingCart);
-    }
+
+//    public HttpResponse<Shopping> addShoppingCart(@Body UserEvent user) throws ShoppingResourceNotFoundException, CannotCreateAShoppingWithTheSameId {
+//        Shopping addShoppingCart = shoppingService.addShoppingCart(user);
+//        return HttpResponse.created(addShoppingCart);
+//    }
 
 //    @Patch("orders/{idShopping}")
 //    public HttpResponse<Shopping> addOrder(@PathVariable String idShopping){

@@ -71,7 +71,7 @@ public class ProductService {
         return product;
     }
     public Product searchProductPerName(String name){
-        Product product = productRepository.findByName(name).orElseThrow(() -> new ProductResourceNotFoundException(name));
+        Product product = productRepository.findByNameContains(name).orElseThrow(() -> new ProductResourceNotFoundException(name));
         return product;
     }
 

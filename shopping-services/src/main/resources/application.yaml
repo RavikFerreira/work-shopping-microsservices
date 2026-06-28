@@ -65,6 +65,7 @@ kafka:
     servers: localhost:9092
 
   topic:
+    login: login
     start: start
     notify: notify
 

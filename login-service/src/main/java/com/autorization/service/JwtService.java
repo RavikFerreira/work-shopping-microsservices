@@ -1,11 +1,10 @@
 package com.autorization.service;
 
-import com.autorization.config.JwtConfig;
+import com.autorization.config.jwt.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import io.micronaut.context.annotation.Value;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.utils.SecurityService;
@@ -26,9 +25,6 @@ public class JwtService {
     private SecurityService securityService;
     @Inject
     private JwtConfig jwtConfig;
-
-//    @Value("${jwt.secret}")
-//    private String SECRET_KEY;
 
     public String extractUserName(String token){
         return extractClaim(token, Claims::getSubject);
