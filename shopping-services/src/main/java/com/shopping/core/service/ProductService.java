@@ -70,6 +70,10 @@ public class ProductService {
         Product product = productRepository.findByIdProduct(idProduct).orElseThrow(() -> new ProductResourceNotFoundException(idProduct));
         return product;
     }
+    public Product searchProductPerName(String name){
+        Product product = productRepository.findByName(name).orElseThrow(() -> new ProductResourceNotFoundException(name));
+        return product;
+    }
 
     public Product updateOrderInProduct(String idProduct, Product product) {
         searchProduct(idProduct);

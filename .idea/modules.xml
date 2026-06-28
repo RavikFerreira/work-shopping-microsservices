@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Project Micronaut Migration.iml" filepath="$PROJECT_DIR$/.idea/Project Micronaut Migration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/work-shopping-microsservices-backend.iml" filepath="$PROJECT_DIR$/.idea/work-shopping-microsservices-backend.iml" />
     </modules>
   </component>
 </project>
