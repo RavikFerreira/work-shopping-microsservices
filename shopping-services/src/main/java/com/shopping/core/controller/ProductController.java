@@ -32,9 +32,16 @@ public class ProductController {
         return HttpResponse.created(products);
     }
     @Get("searchProduct/{idProduct}")
-    @Secured({"ADMIN","USER"})
+    @Secured("ADMIN")
     public HttpResponse<Product> search(@PathVariable String idProduct){
         Product product = productService.searchProduct(idProduct);
+        return HttpResponse.ok(product);
+    }
+
+    @Get("searchProduct/{name}")
+    @Secured({"ADMIN", "USER"})
+    public HttpResponse<Product> searchPerName(@QueryValue String name){
+        Product product = productService.searchProductPerName(name);
         return HttpResponse.ok(product);
     }
 

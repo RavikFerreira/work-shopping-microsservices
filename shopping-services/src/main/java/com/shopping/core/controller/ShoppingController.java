@@ -50,14 +50,14 @@ public class ShoppingController {
     }
 
     @Get("search/{idShopping}")
-    @Secured({"ADMIN", "USER"})
+    @Secured({"ADMIN"})
     public HttpResponse<Shopping> search(@PathVariable String idShopping){
         Shopping shoppingList = shoppingService.search(idShopping);
         return HttpResponse.ok(shoppingList);
     }
 
     @Delete("delete/{idShopping}")
-    @Secured("ADMIN")
+    @Secured({"ADMIN", "USER"})
     public HttpResponse<Shopping> delete(@PathVariable String idShopping) throws CannotDeleteABusyShopping {
         shoppingService.delete(idShopping);
         return HttpResponse.ok();
