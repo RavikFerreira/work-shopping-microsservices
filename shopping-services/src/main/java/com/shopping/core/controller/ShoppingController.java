@@ -14,6 +14,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Patch;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.security.annotation.Secured;
 import jakarta.inject.Inject;
 
 import java.util.List;
@@ -24,11 +25,13 @@ public class ShoppingController {
     private ShoppingService shoppingService;
 
     @Get("list")
+    @Secured({"ADMIN", "USER"})
     public HttpResponse<List<Shopping>> listOrders(){
         return HttpResponse.ok(shoppingService.list());
     }
 
     @Post("create")
+    @Secured({"ADMIN", "USER"})
     public HttpResponse<Shopping> addShoppingCart(@Body Shopping shopping) throws ShoppingResourceNotFoundException, CannotCreateAShoppingWithTheSameId {
         Shopping addShoppingCart = shoppingService.addShoppingCart(shopping);
         return HttpResponse.created(addShoppingCart);
@@ -40,29 +43,34 @@ public class ShoppingController {
 //        return HttpResponse.ok(addOrder);
 //    }
     @Patch("addProductInOrder/{idShopping}/{idProduct}")
+    @Secured({"ADMIN", "USER"})
     public HttpResponse<Shopping> addProductInOrder(@PathVariable String idShopping, @PathVariable String idProduct) throws ProductResourceNotFoundException {
         Shopping product = shoppingService.addProductInOrder(idShopping, idProduct);
         return HttpResponse.created(product);
     }
 
     @Get("search/{idShopping}")
+    @Secured({"ADMIN", "USER"})
     public HttpResponse<Shopping> search(@PathVariable String idShopping){
         Shopping shoppingList = shoppingService.search(idShopping);
         return HttpResponse.ok(shoppingList);
     }
 
     @Delete("delete/{idShopping}")
+    @Secured("ADMIN")
     public HttpResponse<Shopping> delete(@PathVariable String idShopping) throws CannotDeleteABusyShopping {
         shoppingService.delete(idShopping);
         return HttpResponse.ok();
     }
 
     @Get("payment/{idShopping}")
+    @Secured({"ADMIN", "USER"})
     public HttpResponse<Shopping> realizedPayment(@PathVariable String idShopping){
         shoppingService.realizedPayment(idShopping);
         return HttpResponse.ok();
     }
     @Get("finallyOrder/{idShopping}")
+    @Secured({"ADMIN", "USER"})
     public HttpResponse<Shopping> finalizedOrder(@PathVariable String idShopping){
         shoppingService.finalizedOrder(idShopping);
         return HttpResponse.ok();

@@ -126,7 +126,6 @@ public class ShoppingService {
             }
             shoppingList.setAccount(account);
         }
-
         return shoppingList;
     }
 
