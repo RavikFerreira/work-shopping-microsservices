@@ -68,10 +68,10 @@ public class AuthenticationService {
     }
 
    public AuthenticationResponse authenticate (AuthenticationRequest authenticationRequest){
-       User user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow( () -> new IllegalArgumentException("Email ou senha inválidos"));
+       User user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow( () -> new InvalidEmailOrPasswordExceptions("Email ou senha inválidos"));
 
        if (!BCrypt.checkpw(authenticationRequest.getPassword(), user.getPassword())) {
-           throw new IllegalArgumentException("Email ou senha inválidos");
+           throw new InvalidEmailOrPasswordExceptions("Email ou senha inválidos");
        }
        Authentication auth = Authentication.build(
                user.getEmail(),
@@ -86,7 +86,7 @@ public class AuthenticationService {
    }
 
     public AuthenticationResponse refreshToken (String refreshToken){
-        User user = userRepository.findByEmail(jwtService.getEmailFromToken(refreshToken)).orElseThrow( () -> new IllegalArgumentException("Token de atualização inválido"));
+        User user = userRepository.findByEmail(jwtService.getEmailFromToken(refreshToken)).orElseThrow( () -> new InvalidUpdateTokenExceptions("Token de atualização inválido"));
 
         Authentication auth = Authentication.build(
                 user.getEmail(),
