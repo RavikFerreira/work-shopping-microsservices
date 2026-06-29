@@ -10,7 +10,7 @@ public class PasswordEncode {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public boolean matches (String rawPassowrd, String hash){
-        return BCrypt.checkpw(rawPassowrd, hash);
+    public boolean matches (String rawPassword, String hash){
+        return BCrypt.checkpw(rawPassword, hash);
     }
 }
