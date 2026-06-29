@@ -1,13 +1,14 @@
 package com.autorization.service;
 
-import com.autorization.config.exceptions.exception.InvalidEmailOrPasswordExceptions;
-import com.autorization.config.exceptions.exception.InvalidUpdateTokenExceptions;
+import com.autorization.models.entity.UserEvent;
 import com.autorization.dto.request.AuthenticationRequest;
 import com.autorization.dto.request.UserRequest;
 import com.autorization.dto.response.AuthenticationResponse;
+import com.autorization.kafka.Producer;
 import com.autorization.models.entity.User;
 import com.autorization.models.enums.Role;
 import com.autorization.repostory.UserRepository;
+import com.autorization.utils.JsonUtil;
 
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.authentication.Authentication;
@@ -23,7 +24,12 @@ import java.util.*;
 @Singleton
 @Secured(SecurityRule.IS_ANONYMOUS)
 public class AuthenticationService {
-
+    @Inject
+    private Producer producer;
+    @Inject
+    private JsonUtil jsonUtil;
+    @Inject
+    private EventService eventService;
     @Inject
     private UserRepository userRepository;
     @Inject
@@ -40,16 +46,26 @@ public class AuthenticationService {
 
        userRepository.save(user);
 
-        Authentication auth = Authentication.build(
-                user.getEmail(),
-                List.of(user.getRole().name())
-        );
+
+
+       Authentication auth = Authentication.build(
+               user.getEmail(),
+               List.of(user.getRole().name())
+       );
 
        String token = jwtService.generateToken(auth);
        String refreshToken = jwtService.generateRefresh(new HashMap<>(), auth);
+        producer.sendEvent(jsonUtil.toJson(createPayload(userRequest)));
        return new AuthenticationResponse(token, refreshToken);
 
    }
+
+    private UserEvent createPayload(UserRequest userRequest){
+        UserEvent event = new UserEvent();
+        event.setId(event.getId());
+        eventService.save(event);
+        return event;
+    }
 
    public AuthenticationResponse authenticate (AuthenticationRequest authenticationRequest){
        User user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow( () -> new InvalidEmailOrPasswordExceptions("Email ou senha inválidos"));

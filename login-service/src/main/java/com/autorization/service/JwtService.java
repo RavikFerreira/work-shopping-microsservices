@@ -1,6 +1,6 @@
 package com.autorization.service;
 
-import com.autorization.config.JwtConfig;
+import com.autorization.config.jwt.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

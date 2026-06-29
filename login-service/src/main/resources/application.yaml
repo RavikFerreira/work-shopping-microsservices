@@ -15,6 +15,20 @@ micronaut:
 jwt:
   secret: "9f3c1a7b6d4e8f90a1c2b3d4e5f60718"
 
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  topic:
+    login: login
+
+  consumer:
+    group-id: login-group
+    auto-offset-reset: latest
+
+logger:
+  levels:
+    org.apache.kafka: OFF
+
 datasources:
   default:
     url: jdbc:postgresql://localhost:5435/login-db

@@ -31,6 +31,7 @@ public class EventService {
         save(event);
         LOG.info("ShoppingID {} with notified! TransactionID: {} " + event.getShoppingId(),  event.getTransactionId());
     }
+
     public List<Event> findAll(){
         return eventRepository.findAllOrderByCreatedAtDesc();
     }
@@ -62,7 +63,6 @@ public class EventService {
     public void save(Event event){
         eventRepository.save(event);
     }
-
 
     public void save(EventProduct event){
         eventProductRepository.save(event);

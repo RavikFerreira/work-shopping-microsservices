@@ -1,7 +1,7 @@
 package com.shopping.core.service;
 
-
 import com.shopping.config.exceptions.*;
+import com.shopping.core.dto.UserEvent;
 import com.shopping.core.kafka.Producer;
 import com.shopping.core.models.Event;
 import com.shopping.core.models.Order;
@@ -11,6 +11,7 @@ import com.shopping.core.repository.EventRepository;
 import com.shopping.core.repository.ProductRepository;
 import com.shopping.core.repository.ShoppingRepository;
 import com.shopping.core.utils.JsonUtil;
+import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -54,17 +55,20 @@ public class ShoppingService {
         return shoppingList;
     }
 
-    public Shopping addShoppingCart(Shopping shopping){
-        Optional<Shopping> shoppingExists = shoppingRepository.findByIdShopping(shopping.getIdShopping());
+    public Shopping addShoppingCart(UserEvent user){
+        Optional<Shopping> shoppingExists = shoppingRepository.findByIdShopping(String.valueOf(user.getId()));
         if(shoppingExists.isPresent()) {
-            throw new CannotCreateAShoppingWithTheSameId("Cannot create a shopping with the same id: " + shopping.getIdShopping());
+            throw new CannotCreateAShoppingWithTheSameId("Cannot create a shopping with the same id: " + user.getId());
         }
+
+        Shopping shopping = new Shopping();
+        shopping.setIdShopping(String.valueOf(user.getId()));
         shopping.setOrder(shopping.getOrder());
-        if(shopping.getOrder() == null) {
-            Order order = new Order();
-            shopping.setOrder(order);
-            order.setIdOrder(shopping.getIdShopping());
-        }
+
+        Order order = new Order();
+        order.setIdOrder(shopping.getIdShopping());
+        shopping.setOrder(order);
+
         shoppingRepository.save(shopping);
         return shopping;
     }

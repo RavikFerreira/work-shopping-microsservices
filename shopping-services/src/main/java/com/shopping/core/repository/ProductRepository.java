@@ -9,7 +9,7 @@ import java.util.Optional;
 @MongoRepository(databaseName = "shopping-db")
 public interface ProductRepository extends CrudRepository<Product, String> {
 
-    Optional<Product> findByName (String name);
+    Optional<Product> findByNameContains (String name);
     Optional<Product> findByIdProduct (String idProduct);
 
 }

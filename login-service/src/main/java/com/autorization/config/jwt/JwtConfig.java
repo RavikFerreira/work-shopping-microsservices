@@ -1,4 +1,4 @@
-package com.autorization.config;
+package com.autorization.config.jwt;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import jakarta.inject.Singleton;
