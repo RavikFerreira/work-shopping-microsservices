@@ -1,7 +1,7 @@
 package com.autorization.service;
 
-import com.autorization.config.exceptions.InvalidEmailOrPasswordExceptions;
-import com.autorization.config.exceptions.InvalidUpdateTokenExceptions;
+import com.autorization.config.exceptions.exception.InvalidEmailOrPasswordExceptions;
+import com.autorization.config.exceptions.exception.InvalidUpdateTokenExceptions;
 import com.autorization.dto.request.AuthenticationRequest;
 import com.autorization.dto.request.UserRequest;
 import com.autorization.dto.response.AuthenticationResponse;

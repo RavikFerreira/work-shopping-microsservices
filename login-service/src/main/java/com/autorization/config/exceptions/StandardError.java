@@ -1,11 +1,17 @@
 package com.autorization.config.exceptions;
 
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.serde.annotation.Serdeable;
 
+import java.io.Serial;
 import java.io.Serializable;
 
+@Introspected
+@Serdeable
 public class StandardError implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private HttpStatus status;
