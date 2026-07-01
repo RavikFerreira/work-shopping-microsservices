@@ -1,4 +1,4 @@
-package com.shopping.config.exceptions;
+package com.shopping.config.exceptions.exception;
 
 
 public class ItIsNotPossibleToAddAProductToTheMenuWithTheSameId extends RuntimeException {

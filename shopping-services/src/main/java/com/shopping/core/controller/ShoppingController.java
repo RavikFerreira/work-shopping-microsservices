@@ -1,22 +1,16 @@
 package com.shopping.core.controller;
 
-import com.shopping.core.dto.UserEvent;
-import com.shopping.config.exceptions.CannotCreateAShoppingWithTheSameId;
-import com.shopping.config.exceptions.CannotDeleteABusyShopping;
-import com.shopping.config.exceptions.ProductResourceNotFoundException;
-import com.shopping.config.exceptions.ShoppingResourceNotFoundException;
+import com.shopping.config.exceptions.exception.CannotDeleteABusyShopping;
+import com.shopping.config.exceptions.exception.ProductResourceNotFoundException;
 import com.shopping.core.models.Shopping;
 import com.shopping.core.service.ShoppingService;
 import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Patch;
 import io.micronaut.http.annotation.PathVariable;
-import io.micronaut.http.annotation.Post;
 import io.micronaut.security.annotation.Secured;
-import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 
 import java.util.List;
@@ -32,17 +26,6 @@ public class ShoppingController {
         return HttpResponse.ok(shoppingService.list());
     }
 
-
-//    public HttpResponse<Shopping> addShoppingCart(@Body UserEvent user) throws ShoppingResourceNotFoundException, CannotCreateAShoppingWithTheSameId {
-//        Shopping addShoppingCart = shoppingService.addShoppingCart(user);
-//        return HttpResponse.created(addShoppingCart);
-//    }
-
-//    @Patch("orders/{idShopping}")
-//    public HttpResponse<Shopping> addOrder(@PathVariable String idShopping){
-//        Shopping addOrder = shoppingService.addOrder(idShopping);
-//        return HttpResponse.ok(addOrder);
-//    }
     @Patch("addProductInOrder/{idShopping}/{idProduct}")
     @Secured({"ADMIN", "USER"})
     public HttpResponse<Shopping> addProductInOrder(@PathVariable String idShopping, @PathVariable String idProduct) throws ProductResourceNotFoundException {

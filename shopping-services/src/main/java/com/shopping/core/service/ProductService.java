@@ -1,24 +1,19 @@
 package com.shopping.core.service;
 
 
-import com.shopping.config.exceptions.ProductResourceNotFoundException;
+import com.shopping.config.exceptions.exception.ProductResourceNotFoundException;
 import com.shopping.core.kafka.Producer;
-import com.shopping.core.models.Event;
 import com.shopping.core.models.EventProduct;
 import com.shopping.core.models.Product;
-import com.shopping.core.models.Shopping;
 import com.shopping.core.repository.ProductRepository;
 import com.shopping.core.utils.JsonUtil;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.AllArgsConstructor;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.UUID;
 
 @Singleton
 @AllArgsConstructor
