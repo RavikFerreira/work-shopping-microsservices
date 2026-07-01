@@ -73,8 +73,9 @@ public class ShoppingService {
         return shopping;
     }
 
-    public Shopping addProductInOrder(String idShopping, String idProduct) {
-        Shopping shoppingList = shoppingRepository.findByIdShopping(idShopping).orElseThrow(() -> new ShoppingResourceNotFoundException("Shopping resource not found!"));
+    public Shopping addProductInOrder(String idProduct) {
+        Shopping shopping = new Shopping();
+        Shopping shoppingList = shoppingRepository.findByIdShopping(shopping.getIdShopping()).orElseThrow(() -> new ShoppingResourceNotFoundException("Shopping resource not found!"));
         Product productExists = productRepository.findByIdProduct(idProduct).orElseThrow(() -> new ProductResourceNotFoundException("Product resource not found!"));
         if(!Objects.equals(productExists.getIdProduct(), idProduct)){
             throw new ProductResourceNotFoundException("Product resource not found!");
