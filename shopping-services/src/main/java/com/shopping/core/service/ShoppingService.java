@@ -155,7 +155,8 @@ public class ShoppingService {
             throw new PaymentNotRealizedException("Payment not realized!");
         }
         else {
-            shoppingList.setOrder(null);
+            shoppingList.getOrder().setProducts(null);
+            shoppingList.setAccount(0.0);
             shoppingRepository.update(shoppingList);
         }
     }
