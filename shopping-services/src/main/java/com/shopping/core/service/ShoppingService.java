@@ -14,6 +14,7 @@ import com.shopping.core.utils.JsonUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import org.apache.kafka.shaded.com.google.protobuf.StringValue;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -56,11 +57,6 @@ public class ShoppingService {
     }
 
     public Shopping addShoppingCart(UserEvent user){
-        Optional<Shopping> shoppingExists = shoppingRepository.findByIdShopping(String.valueOf(user.getId()));
-        if(shoppingExists.isPresent()) {
-            throw new CannotCreateAShoppingWithTheSameId("Cannot create a shopping with the same id: " + user.getId());
-        }
-
         Shopping shopping = new Shopping();
         shopping.setIdShopping(String.valueOf(user.getId()));
         shopping.setOrder(shopping.getOrder());
@@ -73,9 +69,8 @@ public class ShoppingService {
         return shopping;
     }
 
-    public Shopping addProductInOrder(String idProduct) {
-        Shopping shopping = new Shopping();
-        Shopping shoppingList = shoppingRepository.findByIdShopping(shopping.getIdShopping()).orElseThrow(() -> new ShoppingResourceNotFoundException("Shopping resource not found!"));
+    public Shopping addProductInOrder(Shopping shopping, String idProduct) {
+        Shopping shoppingList = shoppingRepository.findByIdShopping(String.valueOf(shopping.getIdShopping())).orElseThrow(() -> new ShoppingResourceNotFoundException("Shopping resource not found!"));
         Product productExists = productRepository.findByIdProduct(idProduct).orElseThrow(() -> new ProductResourceNotFoundException("Product resource not found!"));
         if(!Objects.equals(productExists.getIdProduct(), idProduct)){
             throw new ProductResourceNotFoundException("Product resource not found!");

@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 @Serdeable
 public class UserEvent {
 
-    private long id;
+    private Long id;
 
     public UserEvent() {
     }
@@ -17,11 +17,11 @@ public class UserEvent {
         this.id = id;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
