@@ -22,13 +22,15 @@ public class Product implements Serializable {
     private String name;
     private double price = 0.0;
     private int quantity;
+    private String image;
 
-    public Product(String id, String idProduct, String name, double price, int quantity) {
+    public Product(String id, String idProduct, String name, double price, int quantity, String image) {
         this.id = id;
         this.idProduct = idProduct;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.image = image;
     }
 
     public Product(){}
@@ -71,4 +73,11 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
