@@ -48,16 +48,17 @@ public class AuthenticationService {
 
        userRepository.save(user);
 
-
-
        Authentication auth = Authentication.build(
                user.getEmail(),
-               List.of(user.getRole().name())
+               List.of(user.getRole().name()),
+               Map.of("id", user.getId())
        );
 
        String token = jwtService.generateToken(auth);
        String refreshToken = jwtService.generateRefresh(new HashMap<>(), auth);
-        producer.sendEvent(jsonUtil.toJson(createPayload(userRequest)));
+
+       producer.sendEvent(jsonUtil.toJson(createPayload(userRequest)));
+
        return new AuthenticationResponse(token, refreshToken);
 
    }
@@ -77,10 +78,11 @@ public class AuthenticationService {
        }
        Authentication auth = Authentication.build(
                user.getEmail(),
-               List.of(user.getRole().name())
+               List.of(user.getRole().name()),
+               Map.of("id", user.getId())
        );
 
-       String jwtToken = jwtService.generateToken(auth);
+       String jwtToken = jwtService.generateToken(new HashMap<>(), auth);
        String refreshToken = jwtService.generateRefresh(new HashMap<>(), auth);
 
        return new AuthenticationResponse(jwtToken, refreshToken);
@@ -92,7 +94,8 @@ public class AuthenticationService {
 
         Authentication auth = Authentication.build(
                 user.getEmail(),
-                List.of(user.getRole().name())
+                List.of(user.getRole().name()),
+                Map.of("id", user.getId())
         );
 
         String jwtToken = jwtService.generateToken(auth);

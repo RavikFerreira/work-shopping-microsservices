@@ -42,6 +42,7 @@ public class JwtService {
     public String generateToken (Map<String, Object> extraClaims, Authentication authentication){
         return Jwts.builder()
                 .setSubject(authentication.getName())
+                .claim("id", authentication.getAttributes().get("id"))
                 .claim("roles", authentication.getRoles())
                 .setIssuedAt( new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24))
@@ -97,8 +98,4 @@ public class JwtService {
         }
         return false;
     }
-
-
-
-
 }
