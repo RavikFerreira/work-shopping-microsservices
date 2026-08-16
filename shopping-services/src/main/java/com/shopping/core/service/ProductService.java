@@ -45,6 +45,7 @@ public class ProductService {
         if(orders.isEmpty()){
             product.setIdProduct(product.getIdProduct());
             product.setQuantity(product.getQuantity());
+            product.setImage(product.getImage());
             productRepository.save(product);
         }
 
