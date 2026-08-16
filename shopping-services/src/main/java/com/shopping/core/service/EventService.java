@@ -1,6 +1,6 @@
 package com.shopping.core.service;
 
-import com.shopping.config.exceptions.ShoppingResourceNotFoundException;
+import com.shopping.config.exceptions.exception.ShoppingResourceNotFoundException;
 import com.shopping.core.dto.EventFilters;
 import com.shopping.core.models.Event;
 import com.shopping.core.models.EventProduct;

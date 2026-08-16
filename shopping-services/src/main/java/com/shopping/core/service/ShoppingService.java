@@ -1,6 +1,6 @@
 package com.shopping.core.service;
 
-import com.shopping.config.exceptions.*;
+import com.shopping.config.exceptions.exception.*;
 import com.shopping.core.dto.UserEvent;
 import com.shopping.core.kafka.Producer;
 import com.shopping.core.models.Event;
@@ -11,7 +11,6 @@ import com.shopping.core.repository.EventRepository;
 import com.shopping.core.repository.ProductRepository;
 import com.shopping.core.repository.ShoppingRepository;
 import com.shopping.core.utils.JsonUtil;
-import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

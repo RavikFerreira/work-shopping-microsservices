@@ -1,9 +1,8 @@
 package com.shopping.core.controller;
 
-import com.shopping.config.exceptions.ItIsNotPossibleToAddAProductToTheMenuWithTheSameId;
-import com.shopping.config.exceptions.UnableToEditAnOrderFromAShopping;
+import com.shopping.config.exceptions.exception.ItIsNotPossibleToAddAProductToTheMenuWithTheSameId;
+import com.shopping.config.exceptions.exception.UnableToEditAnOrderFromAShopping;
 import com.shopping.core.models.Product;
-import com.shopping.core.models.Shopping;
 import com.shopping.core.service.ProductService;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
