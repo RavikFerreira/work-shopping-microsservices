@@ -9,6 +9,7 @@ O projeto foi criado com o objetivo de demonstrar conceitos modernos de desenvol
 # 📚 Sumário
 
 * [Sobre o Projeto](#-sobre-o-projeto)
+* [Visualização do Processo BPMN](#-visualização-do-processo-bpmn)
 * [Arquitetura](#-arquitetura)
 * [Tecnologias Utilizadas](#-tecnologias-utilizadas)
 * [Estrutura do Projeto](#-estrutura-do-projeto)
@@ -45,6 +46,16 @@ O projeto segue conceitos de arquitetura distribuída e pode ser utilizado como 
 
 ---
 
+# 🗺️ Visualização do Processo BPMN
+
+Abaixo está a representação visual do fluxo de negócio desenhado para esta arquitetura:
+
+![Diagrama BPMN](./processo.png)
+
+> 💡 **Nota:** Para editar ou visualizar as propriedades do arquivo original, baixe o arquivo `processo.bpmn` localizado na raiz do projeto e abra-o utilizando o [Camunda Modeler](https://camunda.com) ou importando diretamente no [bpmn.io](https://bpmn.io).
+
+---
+
 # 🏗 Arquitetura
 
 A aplicação foi estruturada utilizando arquitetura modular baseada em microsserviços.
@@ -57,6 +68,7 @@ Cliente
 Aplicação
    ↓
 ---------------------------------
+
 | Product Service              |
 | Order Service                |
 | Payment Service              |
@@ -117,6 +129,8 @@ work-shopping-microsservices/
 ├── order-service/
 ├── payment-service/
 ├── docker-compose.yml
+├── processo.bpmn
+├── processo.png
 └── README.md
 ```
 
@@ -278,11 +292,11 @@ Desenvolvido por Ravik Ferreira.
 
 GitHub:
 
-[RavikFerreira GitHub](https://github.com/RavikFerreira?utm_source=chatgpt.com)
+[RavikFerreira GitHub](https://github.com/RavikFerreira)
 
 Projeto:
 
-[Work Shopping Microsservices Repository](https://github.com/RavikFerreira/work-shopping-microsservices?utm_source=chatgpt.com)
+[Work Shopping Microsservices Repository](https://github.com/RavikFerreira/work-shopping-microsservices)
 
 ---
 
