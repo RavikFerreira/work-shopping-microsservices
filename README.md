@@ -52,7 +52,7 @@ Abaixo está a representação visual do fluxo de negócio desenhado para esta a
 
 ![Diagrama BPMN](./processo.png)
 
-> 💡 **Nota:** Para editar ou visualizar as propriedades do arquivo original, baixe o arquivo `processo.bpmn` localizado na raiz do projeto e abra-o utilizando o [Camunda Modeler](https://camunda.com) ou importando diretamente no [bpmn.io](https://bpmn.io).
+> 💡 **Nota:** Para editar ou visualizar as propriedades do arquivo original, baixe o arquivo `processo.bpmn` localizado na raiz do projeto e importe diretamente no [bpmn.io](https://bpmn.io).
 
 ---
 
