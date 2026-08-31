@@ -1,6 +1,25 @@
 micronaut:
   server:
     port: 8083
+
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowed-origins:
+            - http://localhost:3000
+          allowed-methods:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+            - OPTIONS
+          allowed-headers:
+            - Content-Type
+            - Authorization
+          allow-credentials: true
+
   router:
     static-resources:
       swagger:
