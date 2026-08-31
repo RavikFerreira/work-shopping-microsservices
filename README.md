@@ -55,23 +55,5 @@ Abaixo está a representação visual do fluxo de negócio desenhado para esta a
 </p>
 
 ---
-
-# 🏗 Arquitetura
-
-A aplicação foi estruturada utilizando arquitetura modular baseada em microsserviços.
-
-Cada serviço possui responsabilidade específica e comunicação via APIs REST.
-
-```text
-Cliente
-   ↓
-Aplicação
-   ↓
----------------------------------
-
-| Product Service              |
-| Order Service                |
-| Payment Service               |
----------------------------------
    ↓
 Banco de dados
