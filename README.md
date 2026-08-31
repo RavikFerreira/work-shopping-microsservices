@@ -51,7 +51,7 @@ O projeto segue conceitos de arquitetura distribuída e pode ser utilizado como 
 Abaixo está a representação visual do fluxo de negócio desenhado para esta arquitetura:
 
 <p align="center">
-  <img src="./processo.png" alt="Diagrama BPMN" width="100%">
+  <img src="./processo.svg" alt="Diagrama BPMN" width="100%">
 </p>
 
 ---
